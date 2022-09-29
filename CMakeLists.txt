@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 include(CMakePrintHelpers)
 
-set(TARGET PSV)
+set(TARGET PC)
 
 if(${TARGET} STREQUAL "PSV")
   if(DEFINED ENV{VITASDK})
@@ -31,12 +31,18 @@ configure_file(config.h.in config.h)
 
 add_subdirectory(external/lua)
 
-target_include_directories(${PROJECT_NAME}
-    PUBLIC "${PROJECT_BINARY_DIR}"
+if(${TARGET} STREQUAL "PC")
+  add_subdirectory(external/raylib)
+  add_subdirectory(2DL-PC)
+endif()
+
+target_include_directories(${PROJECT_NAME} PUBLIC
+    "${PROJECT_BINARY_DIR}"
+    "${PROJECT_SOURCE_DIR}/2DL-PC"
 )
 
 if(${TARGET} STREQUAL "PC")
-  target_link_libraries(${PROJECT_NAME} PRIVATE m lua::lib)
+  target_link_libraries(${PROJECT_NAME} PRIVATE m lua::lib raylib 2DL)
 endif()
 
 if(${TARGET} STREQUAL "PSV")

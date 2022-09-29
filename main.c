@@ -1,8 +1,8 @@
 #include <stdio.h>
-#include "config.h"
 #include <lua.h>
+#include "render.c"
 
 int main() {
-   printf("Version: %lf \n", VERSION);
+   render();
    return 0;
 }
