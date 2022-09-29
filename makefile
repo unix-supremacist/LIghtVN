@@ -1,8 +1,15 @@
-default: test
+default: all
+
+ifeq (, $(shell which ninja))
+MAKEIT = cmake . -B build/
+else
+MAKEIT = cmake . -B build/ -GNinja
+endif
+
 
 all:
-	cmake -S . -B build/
-	cmake --build "build/"
+	@$(MAKEIT)
+	@cmake --build "build/"
 
 test: all
-	./build/LightVN
+	@./build/LightVN

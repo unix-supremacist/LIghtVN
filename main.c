@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "build/config.h"
+#include "config.h"
 #include <lua.h>
 
 int main() {
