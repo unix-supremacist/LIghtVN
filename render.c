@@ -1,4 +1,5 @@
 #include <graphics.c>
+#include <types.h>
 
 void render(){
     renderInit();

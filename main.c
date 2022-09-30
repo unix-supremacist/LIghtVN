@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <lua.h>
+#include <types.h>
 #include "render.c"
 
-int main() {
+s32 main() {
    render();
    return 0;
 }

@@ -1,4 +1,5 @@
 #include <raylib.h>
+#include <types.h>
 
 typedef struct texture{
 	Texture2D texture;
@@ -45,7 +46,7 @@ void clear(){
     ClearBackground(RAYWHITE);
 }
 
-void drawtext(char* text, int x, int y, int fs){
+void drawtext(char* text, s32 x, s32 y, s32 fs){
     DrawText(text, x, y, fs, LIGHTGRAY);
 }
 
@@ -57,14 +58,6 @@ void unloadTexture(texture texture){
     UnloadTexture(texture.texture);
 }
 
-int uninit(){
+s32 uninit(){
     CloseWindow();
 }
-
-/*drawTexture(Texture texture){
-    DrawTexture(texture, screenWidth/2 - texture.width/2, screenHeight/2 - texture.height/2, WHITE);
-}
-
-void drawLine(){
-    DrawLine(18, 42, screenWidth - 18, 42, BLACK);
-}*/

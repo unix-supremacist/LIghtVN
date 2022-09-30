@@ -1,4 +1,4 @@
-default: test
+default: all
 
 ifeq (, $(shell which ninja))
 MAKEIT = cmake . -B build/

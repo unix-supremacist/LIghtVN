@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 include(CMakePrintHelpers)
 
-set(TARGET PC)
+set(TARGET PSV)
 
 if(${TARGET} STREQUAL "PSV")
   if(DEFINED ENV{VITASDK})
@@ -19,7 +19,6 @@ if(${TARGET} STREQUAL "PSV")
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
   set(VITA_MKSFOEX_FLAGS "${VITA_MKSFOEX_FLAGS} -d PARENTAL_LEVEL=1")
-  include_directories(../common)
   link_directories(${CMAKE_CURRENT_BINARY_DIR})
 endif()
 
@@ -30,24 +29,36 @@ add_executable(${PROJECT_NAME} main.c)
 configure_file(config.h.in config.h)
 
 add_subdirectory(external/lua)
+add_subdirectory(chelp)
 
 if(${TARGET} STREQUAL "PC")
   add_subdirectory(external/raylib)
   add_subdirectory(2DL-PC)
-endif()
-
-target_include_directories(${PROJECT_NAME} PUBLIC
+  target_include_directories(${PROJECT_NAME} PUBLIC
     "${PROJECT_BINARY_DIR}"
+    "${PROJECT_SOURCE_DIR}/chelp"
     "${PROJECT_SOURCE_DIR}/2DL-PC"
-)
-
-if(${TARGET} STREQUAL "PC")
+  )
   target_link_libraries(${PROJECT_NAME} PRIVATE m lua::lib raylib 2DL)
 endif()
 
 if(${TARGET} STREQUAL "PSV")
-  target_link_libraries(${PROJECT_NAME} SceLibKernel_stub m lua::lib)
+  add_subdirectory(2DL-Vita)
+  target_include_directories(${PROJECT_NAME} PUBLIC
+    "${PROJECT_BINARY_DIR}"
+    "${PROJECT_SOURCE_DIR}/chelp"
+    "${PROJECT_SOURCE_DIR}/2DL-Vita"
+  )
+  target_link_libraries(${PROJECT_NAME}
+    vita2d SceDisplay_stub SceGxm_stub SceSysmodule_stub SceCtrl_stub ScePgf_stub
+    ScePvf_stub SceCommonDialog_stub SceAppMgr_stub freetype png jpeg z m c lua::lib 2DL
+  )
   vita_create_self(${PROJECT_NAME}.self ${PROJECT_NAME})
+  vita_create_vpk(${PROJECT_NAME}.vpk UNIX00001 ${PROJECT_NAME}.self
+    VERSION 00.01
+    NAME ${PROJECT_NAME}
+    FILE tatr02_l_1611.png tatr02_l_1611.png
+  )
+  message(STATUS $ENV{VITASDK})
 endif()
-message(STATUS $ENV{VITASDK})
 cmake_print_variables(TARGET)
