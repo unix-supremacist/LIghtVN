@@ -4,44 +4,30 @@
 #include <vita2d.h>
 #include <types.h>
 
-typedef struct texture{
-	vita2d_texture *texture;
-} texture;
+#define shouldGameClose() FALSE
+#define dltexture vita2d_texture*
+#define color u32
+#define white 0xFFFFFFFF
 
-typedef struct color{
-	unsigned int color;
-} color;
-
-color white;
 SceCtrlData pad;
 vita2d_pgf *pgf;
 vita2d_pvf *pvf;
 
-void renderTexture(texture texture, float x, float y, float w, float h, color color){
-   //Vector2 origin = { texture.texture.width/(2/w), texture.texture.height/(2/h) };
-   //Rectangle sourceRec = { 0, 0, texture.texture.width, texture.texture.height };
-   //Rectangle destRec = { ws.x*x, ws.y*y, texture.texture.width*w, texture.texture.height*h };
-   //DrawTexturePro(texture.texture, sourceRec, destRec, origin, 0.0f, color.color);
-
-   vita2d_draw_texture_scale(texture.texture, x*940, y*544, w, h);
+void renderTexture(vita2d_texture *texture, float x, float y, float w, float h, u32 color){
+   vita2d_draw_texture_scale(texture, x*940, y*544, w, h);
 }
 
 void renderInit(){
-    white.color = 0xFFFFFFFF;
    vita2d_init();
    pgf = vita2d_load_default_pgf();
     pvf = vita2d_load_default_pvf();
    memset(&pad, 0, sizeof(pad));
 }
 
-texture loadTexture(char* path){
-    texture texture;
-    texture.texture = vita2d_load_PNG_file(path);
+vita2d_texture* loadTexture(char* path){
+    vita2d_texture *texture;
+    texture = vita2d_load_PNG_file(path);
     return texture;
-}
-
-u8 shouldGameClose(){
-    return FALSE;
 }
 
 void startDrawing(){
@@ -64,9 +50,9 @@ void stopDrawing(){
     vita2d_swap_buffers();
 }
 
-void unloadTexture(texture texture){
+void unloadTexture(vita2d_texture *texture){
     vita2d_fini();//hack this needs a new function implemented
-    vita2d_free_texture(texture.texture);
+    vita2d_free_texture(texture);
 }
 
 s32 uninit(){

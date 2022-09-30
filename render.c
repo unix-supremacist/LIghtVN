@@ -3,7 +3,7 @@
 
 void render(){
     renderInit();
-    texture texture = loadTexture("tatr02_l_1611.png");
+    dltexture texture = loadTexture("tatr02_l_1611.png");
     while (!shouldGameClose()){
         startDrawing();
         clear();
