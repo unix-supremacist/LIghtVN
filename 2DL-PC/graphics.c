@@ -30,7 +30,7 @@ void renderInit(){
 Texture2D loadTexture(char* path){
     Texture2D texture;
     texture = LoadTexture(path);
-    return Texture2D;
+    return texture;
 }
 
 void drawtext(char* text, s32 x, s32 y, s32 fs){

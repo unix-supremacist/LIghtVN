@@ -12,3 +12,5 @@ _deps
 build/
 *.png
 *.psp2dmp
+*.ninja
+PC/
