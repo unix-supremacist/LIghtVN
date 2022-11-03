@@ -10,7 +10,6 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 build/
-*.png
 *.psp2dmp
 *.ninja
 PC/

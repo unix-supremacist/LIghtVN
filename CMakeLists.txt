@@ -57,7 +57,7 @@ if(${TARGET} STREQUAL "PSV")
   vita_create_vpk(${PROJECT_NAME}.vpk UNIX00001 ${PROJECT_NAME}.self
     VERSION 00.01
     NAME ${PROJECT_NAME}
-    FILE tatr02_l_1611.png tatr02_l_1611.png
+    FILE alexa.png alexa.png
   )
   message(STATUS $ENV{VITASDK})
 endif()

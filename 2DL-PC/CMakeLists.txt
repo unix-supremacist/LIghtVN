@@ -8,5 +8,6 @@ add_library(${PROJECT_NAME} graphics.c)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
     "${PROJECT_BINARY_DIR}"
+    "../external/raylib/src"
     "../chelp"
 )
